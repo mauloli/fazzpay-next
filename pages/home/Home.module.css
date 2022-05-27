@@ -1,0 +1,91 @@
+.dashboardContainer {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  height: 100%;
+}
+
+/* -------------------------------- */
+.transactionContainer {
+  margin: 0px 30px;
+  flex: 4.2;
+  display: flex;
+  flex-direction: column;
+}
+.transactionTop {
+  flex: 1.4;
+  display: flex;
+  justify-content: space-between;
+  background-color: #6379f4;
+  border-radius: 20px;
+}
+.balanceLeft {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px 30px;
+}
+.balanceLeft span {
+  color: white;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.balanceRight {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0px 30px;
+}
+.balanceRight button {
+  width: 160px;
+  height: 50px;
+  margin: 10px;
+  border-color: white;
+  background-color: transparent;
+  color: white;
+}
+/* ------------------------------------------------ */
+.transactionBtm {
+  flex: 2;
+  display: flex;
+  margin-top: 10px;
+}
+.transactionLeft {
+  flex: 1.3;
+  background-color: #fff;
+  border-radius: 25px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+  margin: 10px 0px;
+}
+.incomeTop {
+  display: flex;
+  justify-content: space-between;
+}
+.incomeLeft,
+.incomeRight {
+  display: flex;
+  flex-direction: column;
+  margin: 30px;
+}
+.incomeLeft span,
+.incomeRight span {
+  margin: 5px 0px;
+}
+.incomeBtm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 200px;
+}
+.transactionRight {
+  flex: 1;
+  background-color: #fff;
+  border-radius: 25px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+}

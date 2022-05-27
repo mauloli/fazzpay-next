@@ -1,0 +1,61 @@
+/* --------------------Banner Left--------------------- */
+.login {
+  display: flex;
+}
+
+/* ------------------------------------------------- */
+.formContainer {
+  display: flex;
+  align-items: center;
+}
+.mainForm {
+  display: flex;
+  flex-direction: column;
+  width: 450px;
+  margin-left: 50px;
+}
+.mainForm input {
+  width: 100%;
+  margin-left: 10px;
+}
+.formTextHeader {
+  width: 75%;
+  margin-bottom: 30px;
+}
+.formTextBody {
+  margin-bottom: 60px;
+}
+.formFirstName,
+.formLastName,
+.formEmail,
+.formPassword,
+.formEmailRegister,
+.formPasswordRegister {
+  display: flex;
+  align-items: center;
+  margin: 20px 0px;
+}
+.textForgot {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.formEmail {
+  margin-bottom: 80px;
+}
+.formPassword {
+  margin-bottom: 20px;
+}
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 90px;
+  margin-bottom: 40px;
+}
+.buttonContainer button {
+  border: 0px;
+}
+.buttonLogin {
+  width: 90%;
+  height: 50px;
+}

@@ -1,0 +1,12 @@
+.menuContainer {
+  flex: 1;
+}
+.mainContainer {
+  background-color: white;
+  flex: 4.2;
+  height: 100%;
+  margin: 0px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

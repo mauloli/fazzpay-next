@@ -1,0 +1,17 @@
+.menuContainer {
+  flex: 1;
+}
+.mainContainer {
+  flex: 4.2;
+
+  margin-left: 30px;
+}
+.containerUser {
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+  border-radius: 20px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  margin-top: 25px;
+}

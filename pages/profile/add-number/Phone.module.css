@@ -1,0 +1,26 @@
+.inputContainer input {
+  width: 400px;
+  border: 0px;
+  border-bottom: 1.5px solid rgba(169, 169, 169, 0.6);
+  padding-left: 55px;
+}
+.inputContainer input:focus {
+  outline: none;
+  border-color: blue;
+}
+.buttonContainer {
+  margin-top: 60px;
+}
+
+.inputIcon,
+.inputSpan {
+  position: absolute;
+}
+.inputSpan {
+  left: 47%;
+}
+.buttonContainer button {
+  width: 400px;
+  height: 50px;
+  border: 0;
+}

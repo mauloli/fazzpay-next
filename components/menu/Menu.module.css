@@ -1,0 +1,16 @@
+.mainDashboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: white;
+  padding-left: 50px;
+  height: 100%;
+  border-radius: 25px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+}
+.dashboardMenu {
+  margin: 50px 0px;
+}
+.dashboardMenu span {
+  margin-left: 30px;
+}

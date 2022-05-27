@@ -1,0 +1,14 @@
+.main {
+  height: 645px;
+}
+.containerMenu {
+  flex: 1;
+}
+.mainContainer {
+  flex: 4.2;
+  background-color: white;
+  border-radius: 25px;
+  margin-left: 30px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+  flex: 4.2;
+}

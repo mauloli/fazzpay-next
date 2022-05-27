@@ -1,0 +1,32 @@
+.bannerContainer {
+  display: flex;
+  justify-content: center;
+}
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  width: 520px;
+}
+.imgBanner {
+  width: 515px;
+  height: 550px;
+  position: relative;
+  z-index: 1;
+}
+.imgLine {
+  position: absolute;
+  left: 0%;
+  z-index: 0;
+}
+.textDetails {
+  display: flex;
+  flex-direction: column;
+}
+.textHeader,
+.textDetails {
+  margin: 20px 40px 0px 40px;
+}
+
+.textDetails span {
+  margin: 15px 0px;
+}

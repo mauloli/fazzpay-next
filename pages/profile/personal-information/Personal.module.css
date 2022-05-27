@@ -1,0 +1,13 @@
+.inputBorder {
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  height: 85px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 20px;
+  padding-left: 20px;
+}
+.inputBorder span {
+  margin: 5px 0px;
+}

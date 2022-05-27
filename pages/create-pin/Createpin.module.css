@@ -1,0 +1,39 @@
+.formContainer {
+  display: flex;
+  align-items: center;
+}
+.mainForm {
+  display: flex;
+  flex-direction: column;
+  width: 450px;
+  margin-left: 50px;
+}
+
+.formTextHeader {
+  width: 75%;
+  margin-bottom: 30px;
+}
+.formTextBody {
+  margin-bottom: 60px;
+}
+.inputContainer {
+  display: flex;
+  justify-content: space-around;
+}
+.inputContainer input {
+  text-align: center;
+  width: 50px;
+  height: 60px;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 90px;
+  margin-bottom: 40px;
+}
+.buttonConfirm {
+  border: 0px;
+  width: 90%;
+  height: 50px;
+}

@@ -1,0 +1,15 @@
+.userContainer span {
+  margin-top: 10px;
+}
+
+.containerInput button {
+  width: 350px;
+  height: 50px;
+  margin: 10px;
+  background-color: #e5e8ed;
+  border: 0px;
+}
+
+.containerUser {
+  width: 10%;
+}
