@@ -7,25 +7,41 @@ import {
   IoPersonOutline,
   IoLogOutOutline,
 } from "react-icons/io5";
-export default function Menu() {
+export default function Menu(props) {
   return (
     <div className={`${styles.mainDashboard}`}>
       <div className={`atas`}>
-        <div className={styles.dashboardMenu}>
+        <div
+          className={`${styles.dashboardMenu} ${
+            props.data == "home" ? styles.select : ""
+          }`}
+        >
           <IoAppsOutline />
           <span>Dashboard</span>
         </div>
-        <div className={styles.dashboardMenu}>
+        <div
+          className={`${styles.dashboardMenu} ${
+            props.data == "transfer" ? styles.select : ""
+          }`}
+        >
           <IoArrowUp />
           <span>Transfer</span>
         </div>
-        <div className={styles.dashboardMenu}>
+        <div
+          className={`${styles.dashboardMenu} ${
+            props.data == "topup" ? styles.select : ""
+          }`}
+        >
           <IoAddSharp />
           <span>Top up</span>
         </div>
-        <div className={styles.dashboardMenu}>
+        <div
+          className={`${styles.dashboardMenu} ${
+            props.data == "profile" ? styles.select : ""
+          }`}
+        >
           <IoPersonOutline />
-          <span>Local</span>
+          <span>Profile</span>
         </div>
       </div>
       <div className={`bawah`}>

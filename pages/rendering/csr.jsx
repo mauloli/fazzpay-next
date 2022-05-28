@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-
-export default function CSR() {
+import withPrivateRoute from "../../components/withPrivateRoute";
+function CSR() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -31,3 +31,4 @@ export default function CSR() {
     </div>
   );
 }
+export default CSR;

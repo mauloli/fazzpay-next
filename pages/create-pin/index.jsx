@@ -1,9 +1,42 @@
+import axiosServer from "../../utils/axiosServer";
+import axios from "../../utils/axios";
 import React, { useEffect, useState } from "react";
+import { IoCheckmarkOutline } from "react-icons/io5";
 import Banner from "../../components/banner/Banner";
 import styles from "./Createpin.module.css";
-export default function CreatePin() {
+import cookies from "next-cookies";
+import Cookies from "js-cookie";
+import Router from "next/router";
+
+export async function getServerSideProps(context) {
+  const dataCookies = cookies(context);
+  const result = await axiosServer
+    .get(`/user?page=1&limit=50&search=&sort=firstName ASC`, {
+      headers: {
+        Authorization: `Bearer ${dataCookies.token}`,
+      },
+    })
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      return [];
+    });
+  console.log(result);
+  return {
+    props: {
+      data: result.data.data,
+    }, // will be passed to the page component as props
+  };
+}
+
+export default function CreatePin(props) {
   const [pin, setPin] = useState([]);
+  const [fixPin, setFixPin] = useState({ pin: "" });
+  const [updated, setUpdated] = useState(false);
+
   const handleChange = async (e) => {
+    console.log(e.target.name);
     const { maxLength, value, name } = e.target;
     const [fildName, fildIndex] = name.split("-");
     await setPin([...pin, value]);
@@ -16,8 +49,25 @@ export default function CreatePin() {
       }
     }
   };
+  const handleClick = async () => {
+    try {
+      const id = Cookies.get("id");
+      console.log(id);
+      const result = await axios.patch(`user/pin/${id}`, fixPin);
+      if (result.data.status == 200) {
+        setUpdated(true);
+      }
+      console.log(result);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
   useEffect(() => {
-    console.log(pin);
+    // console.log(pin);
+    if (pin.length == 6) {
+      const newPinn = pin.join("");
+      setFixPin({ pin: newPinn });
+    }
   }, [pin]);
   return (
     <div style={{ display: "flex" }}>
@@ -27,20 +77,49 @@ export default function CreatePin() {
       <div className={styles.formContainer} style={{ flex: 1 }}>
         <div className={styles.mainForm}>
           <div className={`${styles.formTextHeader}`}>
-            <span style={{ fontSize: "24px" }}>
-              Secure Your Account, Your Wallet, and Your Data With 6 Digits PIN
-              That You Created Yourself.
-            </span>
+            {updated ? (
+              <div>
+                <div
+                  className=" mb-3 d-flex justify-content-center position-absolute align-items-center"
+                  style={{
+                    width: "70px",
+                    height: "70px",
+                    backgroundColor: "green",
+                    top: "10%",
+                    borderRadius: "50%",
+                  }}
+                >
+                  <IoCheckmarkOutline color="white" size={40} />
+                </div>
+                <span style={{ fontSize: "24px", fontWeight: "bold" }}>
+                  Your PIN Was Successfully Created
+                </span>
+              </div>
+            ) : (
+              <span style={{ fontSize: "24px" }}>
+                Secure Your Account, Your Wallet, and Your Data With 6 Digits
+                PIN That You Created Yourself.
+              </span>
+            )}
           </div>
 
           <div className={styles.formTextBody}>
-            <span>
-              Create 6 digits pin to secure all your money and your data in
-              Zwallet app. Keep it secret and don’t tell anyone about your
-              Zwallet account password and the PIN.
-            </span>
+            {updated ? (
+              <span>
+                Your PIN was successfully created and you can now access all the
+                features in Zwallet. Login to your new account and start
+                exploring!
+              </span>
+            ) : (
+              <span>
+                Create 6 digits pin to secure all your money and your data in
+                Zwallet app. Keep it secret and don’t tell anyone about your
+                Zwallet account password and the PIN.
+              </span>
+            )}
           </div>
-          <div className={styles.inputContainer}>
+
+          <div className={updated ? styles.buttonNone : styles.inputContainer}>
             <input
               name="ssn-1"
               type="password"
@@ -88,12 +167,24 @@ export default function CreatePin() {
           <div style={{ display: "flex", justifyContent: "flex-start" }}></div>
 
           <div className={styles.buttonContainer}>
-            <button
-              disabled={pin.length < 6 ? true : false}
-              className={styles.buttonConfirm}
-            >
-              Confirm
-            </button>
+            {updated ? (
+              <button
+                className={styles.buttonConfirmed}
+                onClick={Router.push("/login")}
+              >
+                Login Now
+              </button>
+            ) : (
+              <button
+                disabled={pin.length < 6 ? true : false}
+                className={
+                  pin.length < 6 ? styles.buttonConfirm : styles.buttonConfirmed
+                }
+                onClick={handleClick}
+              >
+                Confirm
+              </button>
+            )}
           </div>
         </div>
       </div>

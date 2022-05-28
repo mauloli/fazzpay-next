@@ -9,7 +9,7 @@ export default function MainLayout(props) {
       <Navbar />
       <main className={`d-flex container pt-5 mb-5  ${styles.main}`}>
         <div className={styles.containerMenu}>
-          <Menu />
+          <Menu data={props.data} />
         </div>
         <div className={styles.mainContainer}>{props.children}</div>
       </main>

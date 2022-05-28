@@ -37,3 +37,16 @@
   width: 90%;
   height: 50px;
 }
+.buttonConfirmed {
+  border: 0px;
+  width: 90%;
+  height: 50px;
+  background-color: #6379f4;
+  color: white;
+}
+.displayNone {
+  display: none;
+}
+.buttonNone {
+  display: none;
+}

@@ -78,6 +78,9 @@
   height: 200px;
 }
 .transactionRight {
+  height: 372px;
+  white-space: nowrap;
+  overflow-y: auto;
   flex: 1;
   background-color: #fff;
   border-radius: 25px;
@@ -87,5 +90,5 @@
   margin-left: 10px;
   display: flex;
   flex-direction: column;
-  padding: 10px 20px;
+  padding: 0px 20px 10px 20px;
 }

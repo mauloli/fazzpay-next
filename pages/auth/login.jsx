@@ -1,13 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Login.module.css";
 import Link from "next/link";
+import axios from "../../utils/axios";
+import Cookies from "js-cookie";
 import Banner from "../../components/banner/Banner";
 import {
   IoMailOutline,
   IoLockClosedOutline,
   IoEyeOffOutline,
 } from "react-icons/io5";
+import Router from "next/router";
 export default function Login() {
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
+  const handleSubmit = async () => {
+    try {
+      const result = await axios.post("/auth/login", form);
+      Cookies.set("token", result.data.data.token);
+      Cookies.set("id", result.data.data.id);
+      if (result.data.data.pin == null) {
+        Router.push("/create-pin");
+      } else {
+        Router.push("/home");
+      }
+      console.log(result);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
   return (
     <div className={styles.login}>
       <div style={{ flex: 1 }}>
@@ -32,27 +58,41 @@ export default function Login() {
           </div>
 
           <div className={styles.formEmail}>
-            <IoMailOutline />
+            <IoMailOutline color={form.email.length > 0 ? "blue" : ""} />
             <input
+              className={
+                form.email.length > 0
+                  ? styles.formEmail_inputed
+                  : styles.formEmail_input
+              }
+              name="email"
               type="email"
               placeholder="Enter Your Email"
               style={{
                 border: 0,
                 outline: 0,
-                borderBottom: "2px solid #A9A9A9",
               }}
+              onChange={handleChange}
             />
           </div>
           <div className={styles.formPassword}>
-            <IoLockClosedOutline />
+            <IoLockClosedOutline
+              color={form.password.length > 0 ? "blue" : ""}
+            />
             <input
+              className={
+                form.password.length > 0
+                  ? styles.formPassword_inputed
+                  : styles.formPassword_input
+              }
+              name="password"
               type="password"
               placeholder="Enter Your Password"
               style={{
                 border: 0,
                 outline: 0,
-                borderBottom: "2px solid #A9A9A9",
               }}
+              onChange={handleChange}
             />
             <IoEyeOffOutline style={{ position: "absolute", right: "15%" }} />
           </div>
@@ -61,7 +101,9 @@ export default function Login() {
             <span>Forgot Password</span>
           </div>
           <div className={styles.buttonContainer}>
-            <button className={styles.buttonLogin}>Login</button>
+            <button className={styles.buttonLogin} onClick={handleSubmit}>
+              Login
+            </button>
           </div>
 
           <span style={{ display: "flex", justifyContent: "center" }}>

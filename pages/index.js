@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
+import Script from "next/script";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "../components/navbar";
 export default function Home() {
@@ -77,7 +78,6 @@ export default function Home() {
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossorigin="anonymous"
       />
-      <Component {...pageProps} />
     </div>
   );
 }
