@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axiosServer from "../../utils/axiosServer";
+import { useRouter } from "next/router";
+import Router from "next/router";
 import cookies from "next-cookies";
 import styles from "./Transfer.module.css";
 import Navbar from "../../components/navbar";
@@ -25,6 +27,7 @@ export async function getServerSideProps(context) {
     .catch((err) => {
       return [];
     });
+  console.log(dataUser);
   return {
     props: {
       data: dataUser.data.data,
@@ -33,7 +36,7 @@ export async function getServerSideProps(context) {
 }
 
 export default function Transfer(props) {
-  console.log(props.data);
+  const router = useRouter();
   const [data, setData] = useState(props.data);
   const dummyData = [
     { name: "samue", status: "accept", total: 500000 },
@@ -42,6 +45,9 @@ export default function Transfer(props) {
     { name: "Robert", status: "topup", total: 500000 },
     { name: "Robert", status: "topup", total: 500000 },
   ];
+  const handleSelect = (id) => {
+    console.log(router.asPath + "/test");
+  };
   return (
     <MainLayout data="transfer">
       <div className={styles.mainContainer}>
@@ -52,7 +58,11 @@ export default function Transfer(props) {
           </div>
 
           {data.map((item, index) => (
-            <div key={index} className={styles.containerUser}>
+            <div
+              key={index}
+              className={styles.containerUser}
+              onClick={() => Router.push(`${router.asPath}/${item.id}`)}
+            >
               <img src="../../user1.png" style={{ width: "50px" }} alt="" />
               <div className=" d-flex flex-column ms-3 ">
                 <span className=" mb-2">{`${item.firstName} ${item.lastName}`}</span>

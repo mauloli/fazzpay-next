@@ -9,9 +9,10 @@ import Menu from "../../components/menu";
 import Footer from "../../components/footer/index ";
 import { useDispatch, useSelector } from "react-redux";
 import { getDashboard } from "../../stores/action/dashboard";
+import { getBalance } from "../../stores/action/balance";
+import { getUser } from "../../stores/action/user";
 import Router from "next/router";
 export async function getServerSideProps(context) {
-  console.log(context.query);
   const dataCookies = cookies(context);
 
   const result = await axiosServer
@@ -44,13 +45,21 @@ export async function getServerSideProps(context) {
       Authorization: `Bearer ${dataCookies.token}`,
     },
   });
-
+  const dataUser = await axiosServer.get(
+    `/user?page=1&limit=100000&search=&sort=firstName ASC`,
+    {
+      headers: {
+        Authorization: `Bearer ${dataCookies.token}`,
+      },
+    }
+  );
   return {
     props: {
       data: result.data.data,
       income: income.data.data,
       history: history.data.data,
       dashboard: dashboard.data.data,
+      user: dataUser.data.data,
     }, // will be passed to the page component as props
   };
 }
@@ -73,6 +82,8 @@ export default function Home(props) {
   ];
   const getData = () => {
     dispatch(getDashboard(props.dashboard));
+    dispatch(getBalance(props.data.balance));
+    dispatch(getUser(props.user));
   };
   useEffect(() => {
     getData();
@@ -98,7 +109,7 @@ export default function Home(props) {
                 <span style={{ fontSize: "14px" }}>093473270</span>
               </div>
               <div className={`${styles.balanceRight}`}>
-                <button>
+                <button onClick={() => Router.push("transfer")}>
                   <IoArrowUp
                     size={25}
                     style={{ position: "relative", right: "20" }}

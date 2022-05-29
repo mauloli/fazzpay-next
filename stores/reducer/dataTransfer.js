@@ -2,9 +2,9 @@ const initialState = {
   data: [],
 };
 
-const balance = (state = initialState, action) => {
+const dataTransfer = (state = initialState, action) => {
   switch (action.type) {
-    case "GET_BALANCE":
+    case "GET_DATA_TRANSFER":
       return {
         ...state,
         data: action.data,
@@ -15,4 +15,4 @@ const balance = (state = initialState, action) => {
   }
 };
 
-export default balance;
+export default dataTransfer;

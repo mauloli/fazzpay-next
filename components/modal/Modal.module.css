@@ -1,0 +1,33 @@
+.inputContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+.inputContainer input {
+  border-radius: 10px;
+  border: 1px solid rgba(169, 169, 169, 0.6);
+  text-align: center;
+  width: 50px;
+  height: 60px;
+  margin: 10px;
+}
+.inputPin::-webkit-outer-spin-button,
+.inputPin::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+.fadeIn {
+  transition: opacity 1s ease;
+}
+.fadeOut {
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+.alertContainer {
+  position: absolute;
+  top: 0px;
+  width: 95%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
