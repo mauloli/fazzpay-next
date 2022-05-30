@@ -44,6 +44,9 @@ function ModalConfirmation(props) {
             `/transaction/transfer`,
             props.data
           );
+          props.handleIdTransfer(resultTf.data.data.id);
+          props.handleStatus(result.data);
+          props.onHide();
           console.log(resultTf);
         } catch (error) {
           console.log(error.response);

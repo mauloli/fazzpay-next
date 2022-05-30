@@ -1,30 +1,36 @@
-import React, { useEffect } from "react";
-import cookies from "next-cookies";
+import React from "react";
 import Router from "next/router";
-const login = "/login";
+import cookies from "next-cookies";
+
+const login = "/auth/login"; // Define your login route address.
+
 export default (WrappedComponent) => {
   const hocComponent = ({ ...props }) => <WrappedComponent {...props} />;
 
   hocComponent.getInitialProps = async (context) => {
     console.log(context);
     let dataCookie = cookies(context);
+    // Are you an authorized user or not?
     if (!dataCookie?.token) {
-      if (context.tes) {
+      // Handle server-side and client-side rendering.
+      if (context.res) {
         context.res?.writeHead(302, {
-          location: login,
+          Location: login,
         });
         context.res?.end();
       } else {
         Router.replace(login);
       }
     } else if (WrappedComponent.getInitialProps) {
-      const wrappedComponent = await WrappedComponent.getInitialProps({
+      const wrappedProps = await WrappedComponent.getInitialProps({
         ...context,
         auth: dataCookie,
       });
-      return { ...wrappedComponent, dataCookie };
+      return { ...wrappedProps, dataCookie };
     }
-    return dataCookie;
+
+    return { dataCookie };
   };
+
   return hocComponent;
 };

@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDashboard } from "../../stores/action/dashboard";
 import { getBalance } from "../../stores/action/balance";
 import { getUser } from "../../stores/action/user";
+import withPrivateRoute from "../../components/withPrivateRoute";
 import Router from "next/router";
 export async function getServerSideProps(context) {
   const dataCookies = cookies(context);
@@ -64,7 +65,7 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default function Home(props) {
+function Home(props) {
   const cloudinaryImg = process.env.CLOUDINARY_IMAGE;
 
   console.log(props.history);
@@ -195,3 +196,4 @@ export default function Home(props) {
     </div>
   );
 }
+export default withPrivateRoute(Home);
