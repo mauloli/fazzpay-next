@@ -89,6 +89,10 @@ function Home(props) {
   useEffect(() => {
     getData();
   }, []);
+  const currency = new Intl.NumberFormat("id-ID", {
+    // style: "currency",
+    currency: "IDR",
+  });
   return (
     <div>
       <Navbar />
@@ -106,7 +110,9 @@ function Home(props) {
                 <span style={{ fontSize: "18px", color: "#E0E0E0" }}>
                   Balance
                 </span>
-                <span style={{ fontSize: "40px" }}>{balance}</span>
+                <span style={{ fontSize: "40px" }}>
+                  {currency.format(balance)}
+                </span>
                 <span style={{ fontSize: "14px" }}>093473270</span>
               </div>
               <div className={`${styles.balanceRight}`}>
@@ -132,12 +138,12 @@ function Home(props) {
                   <div className={styles.incomeLeft}>
                     <IoArrowDownSharp style={{ color: "green" }} size={20} />
                     <span>Income</span>
-                    <span>Rp.{totalIncome}</span>
+                    <span>Rp. {currency.format(totalIncome)}</span>
                   </div>
                   <div className={styles.incomeRight}>
                     <IoArrowUp style={{ color: "red" }} size={20} />
                     <span>Expense</span>
-                    <span>Rp.{totalExpense}</span>
+                    <span>Rp. {currency.format(totalExpense)}</span>
                   </div>
                 </div>
                 <div className={styles.incomeBtm}>
@@ -181,9 +187,13 @@ function Home(props) {
                       </div>
                     </div>
                     {item.type == "send" ? (
-                      <span className=" text-danger">-Rp {item.amount}</span>
+                      <span className=" text-danger">
+                        -Rp {currency.format(item.amount)}
+                      </span>
                     ) : (
-                      <span className=" text-success">+Rp {item.amount}</span>
+                      <span className=" text-success">
+                        +Rp {currency.format(item.amount)}
+                      </span>
                     )}
                   </div>
                 ))}
@@ -196,4 +206,4 @@ function Home(props) {
     </div>
   );
 }
-export default withPrivateRoute(Home);
+export default Home;

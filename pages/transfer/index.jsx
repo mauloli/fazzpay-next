@@ -9,6 +9,7 @@ import Footer from "../../components/footer/index ";
 import Menu from "../../components/menu";
 import MainLayout from "../../components/Layout/main";
 import { IoSearchOutline } from "react-icons/io5";
+import { useSelector } from "react-redux";
 
 export async function getServerSideProps(context) {
   const params = context.query;
@@ -36,7 +37,14 @@ export async function getServerSideProps(context) {
 }
 
 export default function Transfer(props) {
+  const [filterName, setFilterName] = useState("");
   const router = useRouter();
+  const user = useSelector((state) => state.user).data;
+  const userFilter = user.filter((item) => {
+    if (item.firstName.toLowerCase().includes(filterName)) {
+      return item;
+    }
+  });
   const [data, setData] = useState(props.data);
   const dummyData = [
     { name: "samue", status: "accept", total: 500000 },
@@ -54,10 +62,15 @@ export default function Transfer(props) {
         <div className={` m-5 ${styles.userContainer}`}>
           <div className={styles.inputContainer}>
             <IoSearchOutline className={` ${styles.iconSearch}`} />
-            <input type="text" className={` bg-light ${styles.search}`} />
+            <input
+              type="text"
+              className={` bg-light ${styles.search}`}
+              value={filterName}
+              onChange={(e) => setFilterName(e.target.value)}
+            />
           </div>
 
-          {data.map((item, index) => (
+          {userFilter.map((item, index) => (
             <div
               key={index}
               className={styles.containerUser}

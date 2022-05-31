@@ -64,6 +64,10 @@ export default function History(props) {
     setData(props.data);
     setTotalPage(props.pagination.totalPage);
   }, [props.data]);
+  const currency = new Intl.NumberFormat("id-ID", {
+    // style: "currency",
+    currency: "IDR",
+  });
   return (
     <MainLayout data={"home"}>
       <div className={styles.mainContainer}>
@@ -97,10 +101,14 @@ export default function History(props) {
               </div>
             </div>
 
-            {item.type == "accept" ? (
-              <span className=" text-success">+Rp {item.amount}</span>
+            {item.type == "accept" || item.type == "topup" ? (
+              <span className=" text-success">
+                +Rp {currency.format(item.amount)}
+              </span>
             ) : (
-              <span className=" text-danger">-Rp {item.amount}</span>
+              <span className=" text-danger">
+                -Rp {currency.format(item.amount)}
+              </span>
             )}
           </div>
         ))}

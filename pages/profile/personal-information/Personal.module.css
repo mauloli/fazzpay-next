@@ -11,3 +11,30 @@
 .inputBorder span {
   margin: 5px 0px;
 }
+.inputBorder input {
+  border: 0;
+}
+.input:focus {
+  outline: 0;
+}
+.buttonConfirm {
+  height: 40px;
+  width: 200px;
+  background-color: #6379f4;
+  border: 0;
+  color: white;
+  border-radius: 10px;
+}
+.alert {
+  position: absolute;
+  width: 71%;
+  top: 15%;
+  text-align: center;
+}
+.fadeIn {
+  transition: opacity 1s ease;
+}
+.fadeOut {
+  opacity: 0;
+  transition: opacity 2s ease;
+}

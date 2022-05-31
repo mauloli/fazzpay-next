@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styles from "./Reset.module.css";
 import Banner from "../../components/banner/Banner";
-import axios from "../../utils/axios";
 import { useRouter } from "next/router";
 import Router from "next/router";
+import axios from "../../utils/axios";
 import {
   IoMailOutline,
   IoLockClosedOutline,
@@ -11,33 +11,38 @@ import {
 } from "react-icons/io5";
 export default function ResetPassword() {
   const router = useRouter();
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [alert, setAlert] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [textAlert, setTextAlert] = useState("");
-  const [email, setEmail] = useState("");
   const handleSubmit = async () => {
-    const data = {
-      email: email,
-      linkDirect: "http://localhost:3000/reset-password",
+    const setData = {
+      keysChangePassword: router.query.keys,
+      newPassword: newPassword,
+      confirmPassword: confirmPassword,
     };
     try {
-      const result = await axios.post(`auth/forgot-password`, data);
-      setAlert(true);
-      setTextAlert(result.data.msg);
-      setTimeout(function () {
-        setAlert(false);
-      }, 3000);
-      setTimeout(function () {
-        Router.push("/login");
-      }, 4000);
-
+      const result = await axios.patch(`/auth/reset-password`, setData);
       console.log(result);
-    } catch (error) {
-      setTextAlert(error.response.data.msg);
+      setTextAlert(result.data.msg);
       setAlert(true);
+      setSuccess(true);
       setTimeout(function () {
         setAlert(false);
       }, 3000);
-      console.log(error.response);
+    } catch (error) {
+      setAlert(true);
+      setTextAlert(error.response.data.msg);
+      if (error.response.data.msg.includes("repeat")) {
+        setTimeout(function () {
+          Router.push("/reset-password");
+        }, 3000);
+      } else {
+        setTimeout(function () {
+          setAlert(false);
+        }, 3000);
+      }
     }
   };
   return (
@@ -70,18 +75,34 @@ export default function ResetPassword() {
             {textAlert}
           </div>
           <div className={styles.formEmail}>
-            <IoMailOutline />
+            <IoLockClosedOutline />
             <input
-              type="email"
-              placeholder="Enter Your Email"
+              type="password"
+              placeholder="Create New Password"
               style={{
                 border: 0,
                 outline: 0,
                 borderBottom: "2px solid #A9A9A9",
               }}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
             />
+            <IoEyeOffOutline />
+          </div>
+          <div className={styles.formEmail}>
+            <IoLockClosedOutline />
+            <input
+              type="password"
+              placeholder="Confirm New Password"
+              style={{
+                border: 0,
+                outline: 0,
+                borderBottom: "2px solid #A9A9A9",
+              }}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+            <IoEyeOffOutline />
           </div>
 
           <div style={{ display: "flex", justifyContent: "flex-start" }}></div>
@@ -89,9 +110,9 @@ export default function ResetPassword() {
           <div className={styles.buttonContainer}>
             <button
               className={styles.buttonConfirm}
-              onClick={() => handleSubmit()}
+              onClick={() => (success ? Router.push("/login") : handleSubmit())}
             >
-              Confirm
+              {success ? "Go to login page" : "Confirm"}
             </button>
           </div>
         </div>

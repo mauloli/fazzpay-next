@@ -20,7 +20,7 @@ export default function UserId() {
   const dispatch = useDispatch();
   const allUser = useSelector((state) => state.user).data;
   const balance = useSelector((state) => state.balance);
-  const [money, setMoney] = useState(0);
+  const [money, setMoney] = useState();
   const [note, setNote] = useState("");
   const router = useRouter();
   const selectUser = allUser.filter(
@@ -39,6 +39,10 @@ export default function UserId() {
       console.log(error.response);
     }
   };
+  const currency = new Intl.NumberFormat("id-ID", {
+    // style: "currency",
+    currency: "IDR",
+  });
   return (
     <MainLayout data="transfer">
       <div className=" m-5 h-75">
@@ -61,9 +65,10 @@ export default function UserId() {
               type="number"
               placeholder="0.00"
               onChange={(e) => setMoney(e.target.value)}
+              value={money}
             />
             <span className=" text-center my-5">
-              Rp {balance.data} Available
+              Rp {currency.format(balance.data)} Available
             </span>
             <div className=" d-flex flex-column align-items-center">
               <IoPencilOutline

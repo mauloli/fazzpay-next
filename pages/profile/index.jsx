@@ -1,11 +1,14 @@
 import React from "react";
 import MainLayout from "../../components/Layout/main";
+import { useRouter } from "next/router";
 import styles from "./Profile.module.css";
 import { IoArrowForwardOutline, IoPencil } from "react-icons/io5";
+import Router from "next/router";
 
 export default function Profile() {
+  const router = useRouter();
   return (
-    <MainLayout>
+    <MainLayout data="profile">
       <div className=" w-100 h-100 d-flex flex-column align-items-center justify-content-center">
         <div
           className={`d-flex flex-column align-items-center ${styles.userContainer}`}
@@ -26,11 +29,19 @@ export default function Profile() {
         </div>
         <div className={`d-flex flex-column ${styles.containerInput}`}>
           <div>
-            <button className=" d-flex align-items-center justify-content-between">
+            <button
+              className=" d-flex align-items-center justify-content-between"
+              onClick={() =>
+                Router.push(`${router.asPath}/personal-information`)
+              }
+            >
               <span>Personal Information</span>
               <IoArrowForwardOutline />
             </button>
-            <button className=" d-flex align-items-center justify-content-between">
+            <button
+              className=" d-flex align-items-center justify-content-between"
+              onClick={() => Router.push(`${router.asPath}/change-password`)}
+            >
               <span>Change Password</span>
               <IoArrowForwardOutline />
             </button>

@@ -29,7 +29,7 @@ export const options = {
     },
   },
 };
-const labels = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
+const labels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 export default function ChartReact() {
   const dataChart = useSelector((state) => state.dashboard);
