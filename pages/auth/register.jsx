@@ -22,6 +22,7 @@ export default function Register() {
     setForm({ ...form, [name]: value });
   };
   const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       const result = await axios.post("auth/register", form);
       console.log(result);

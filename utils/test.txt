@@ -1,0 +1,3 @@
+} else {
+    window.location.href = `/error?msg=${error.response.data.msg}`;
+  }

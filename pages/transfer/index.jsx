@@ -38,6 +38,7 @@ export async function getServerSideProps(context) {
 
 export default function Transfer(props) {
   const [filterName, setFilterName] = useState("");
+  const cloudinaryImg = process.env.CLOUDINARY_IMAGE;
   const router = useRouter();
   const user = useSelector((state) => state.user).data;
   const userFilter = user.filter((item) => {
@@ -76,7 +77,15 @@ export default function Transfer(props) {
               className={styles.containerUser}
               onClick={() => Router.push(`${router.asPath}/${item.id}`)}
             >
-              <img src="../../user1.png" style={{ width: "50px" }} alt="" />
+              <img
+                src={
+                  item.image == null
+                    ? "../../user1.png"
+                    : cloudinaryImg + item.image
+                }
+                style={{ width: "50px" }}
+                alt=""
+              />
               <div className=" d-flex flex-column ms-3 ">
                 <span className=" mb-2">{`${item.firstName} ${item.lastName}`}</span>
                 <span>{item.noTelp ? item.noTelp : "08374727"}</span>

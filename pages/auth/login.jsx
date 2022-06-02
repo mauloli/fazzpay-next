@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Login.module.css";
 import Link from "next/link";
-import axios from "../../utils/axios";
-import Cookies from "js-cookie";
 import Banner from "../../components/banner/Banner";
+import Cookies from "js-cookie";
+import axios from "../../utils/axios";
+import { useDispatch } from "react-redux";
 import {
   IoMailOutline,
   IoLockClosedOutline,
   IoEyeOffOutline,
 } from "react-icons/io5";
 import Router from "next/router";
+
 export default function Login() {
+  const dispatch = useDispatch();
+  const [alert, setAlert] = useState(false);
+  const [textAlert, setTextAlert] = useState("");
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -22,8 +27,12 @@ export default function Login() {
   const handleSubmit = async () => {
     try {
       const result = await axios.post("/auth/login", form);
+      setTextAlert("Login Success, please wait...going to dashboard");
+      setAlert(true);
       Cookies.set("token", result.data.data.token);
       Cookies.set("id", result.data.data.id);
+      const resultLogin = await axios.get(`user/profile/${Cookies.get("id")}`);
+      dispatch({ type: "DATA_LOGIN", data: resultLogin.data.data });
       if (result.data.data.pin == null) {
         Router.push("/create-pin");
       } else {
@@ -32,14 +41,26 @@ export default function Login() {
       console.log(result);
     } catch (error) {
       console.log(error.response);
+      setTextAlert(error.response.data.msg);
+      setAlert(true);
     }
   };
+  useEffect(() => {
+    if (alert) {
+      setTimeout(function () {
+        setAlert(false);
+      }, 4000);
+    }
+  }, [alert]);
+  const getData = async () => {
+    console.log(result);
+  };
+
   return (
     <div className={styles.login}>
       <div style={{ flex: 1 }}>
         <Banner />
       </div>
-
       <div className={styles.formContainer} style={{ flex: 1 }}>
         <div className={styles.mainForm}>
           <div className={`${styles.formTextHeader}`}>
@@ -56,7 +77,16 @@ export default function Login() {
               that for you!
             </span>
           </div>
-
+          <div
+            class={`alert ${
+              textAlert.includes("registed") || textAlert.includes("password")
+                ? "alert-danger"
+                : "alert-primary"
+            }  text-center ${alert ? styles.fadeIn : styles.fadeOut}`}
+            role="alert"
+          >
+            {textAlert}
+          </div>
           <div className={styles.formEmail}>
             <IoMailOutline color={form.email.length > 0 ? "blue" : ""} />
             <input
@@ -101,7 +131,10 @@ export default function Login() {
             <span>Forgot Password</span>
           </div>
           <div className={styles.buttonContainer}>
-            <button className={styles.buttonLogin} onClick={handleSubmit}>
+            <button
+              className={styles.buttonLogin}
+              onClick={() => handleSubmit()}
+            >
               Login
             </button>
           </div>

@@ -11,58 +11,65 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDashboard } from "../../stores/action/dashboard";
 import { getBalance } from "../../stores/action/balance";
 import { getUser } from "../../stores/action/user";
+
 import withPrivateRoute from "../../components/withPrivateRoute";
 import Router from "next/router";
 export async function getServerSideProps(context) {
-  const dataCookies = cookies(context);
+  try {
+    const dataCookies = cookies(context);
 
-  const result = await axiosServer
-    .get(`/user/profile/${dataCookies.id}`, {
+    const result = await axiosServer.get(`/user/profile/${dataCookies.id}`, {
       headers: {
         Authorization: `Bearer ${dataCookies.token}`,
       },
-    })
-    .then((res) => {
-      return res;
-    })
-    .catch((err) => {
-      return [];
     });
-  const income = await axiosServer.get(`/dashboard/${dataCookies.id}`, {
-    headers: {
-      Authorization: `Bearer ${dataCookies.token}`,
-    },
-  });
-  const history = await axiosServer.get(
-    `/transaction/history?page=1&limit=10&filter=WEEK`,
-    {
+
+    const income = await axiosServer.get(`/dashboard/${dataCookies.id}`, {
       headers: {
         Authorization: `Bearer ${dataCookies.token}`,
       },
-    }
-  );
-  const dashboard = await axiosServer.get(`/dashboard/${dataCookies.id}`, {
-    headers: {
-      Authorization: `Bearer ${dataCookies.token}`,
-    },
-  });
-  const dataUser = await axiosServer.get(
-    `/user?page=1&limit=100000&search=&sort=firstName ASC`,
-    {
+    });
+    const history = await axiosServer.get(
+      `/transaction/history?page=1&limit=10&filter=WEEK`,
+      {
+        headers: {
+          Authorization: `Bearer ${dataCookies.token}`,
+        },
+      }
+    );
+    const dashboard = await axiosServer.get(`/dashboard/${dataCookies.id}`, {
       headers: {
         Authorization: `Bearer ${dataCookies.token}`,
       },
-    }
-  );
-  return {
-    props: {
-      data: result.data.data,
-      income: income.data.data,
-      history: history.data.data,
-      dashboard: dashboard.data.data,
-      user: dataUser.data.data,
-    }, // will be passed to the page component as props
-  };
+    });
+    const dataUser = await axiosServer.get(
+      `/user?page=1&limit=100000&search=&sort=firstName ASC`,
+      {
+        headers: {
+          Authorization: `Bearer ${dataCookies.token}`,
+        },
+      }
+    );
+    return {
+      props: {
+        data: result.data.data,
+        income: income.data.data,
+        history: history.data.data,
+        dashboard: dashboard.data.data,
+        user: dataUser.data.data,
+      }, // will be passed to the page component as props
+    };
+  } catch (error) {
+    return {
+      redirect: {
+        destination:
+          error.response.status === 403
+            ? "/auth/login"
+            : `/error?msg=${error.response.data.msg}`,
+        permanent: false,
+      },
+    };
+  }
 }
 
 function Home(props) {
@@ -151,7 +158,7 @@ function Home(props) {
                     className=""
                     style={{ width: "90%", position: "relative", top: "-30px" }}
                   >
-                    <ChartReact />
+                    <ChartReact data={props.dashboard} />
                   </div>
                   <div></div>
                 </div>
@@ -173,7 +180,11 @@ function Home(props) {
                   >
                     <div className=" d-flex align-items-center">
                       <img
-                        src={`${cloudinaryImg}${item.image}`}
+                        src={`${
+                          item.image !== null
+                            ? cloudinaryImg + item.image
+                            : "../../user1.png"
+                        } `}
                         style={{
                           width: "50px",
                           height: "50px",

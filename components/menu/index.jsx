@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import styles from "./Menu.module.css";
 import Router from "next/router";
+import Cookies from "js-cookie";
+import axios from "../../utils/axios";
+import logout from "../logout";
 import {
   IoAppsOutline,
   IoArrowUp,
@@ -11,6 +14,9 @@ import {
 import MyVerticallyCenteredModal from "../modalTopUp";
 
 export default function Menu(props) {
+  const handleLogout = async () => {
+    logout();
+  };
   const [modalShow, setModalShow] = useState(false);
 
   return (
@@ -62,7 +68,11 @@ export default function Menu(props) {
         </div>
       </div>
       <div className={`bawah`}>
-        <div className={styles.dashboardMenu}>
+        <div
+          className={styles.dashboardMenu}
+          onClick={() => handleLogout()}
+          style={{ cursor: "pointer" }}
+        >
           <IoLogOutOutline />
           <span>Logout</span>
         </div>

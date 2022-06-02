@@ -9,34 +9,35 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import { useSelector } from "react-redux";
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
-export const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "top",
-    },
-    title: {
-      display: true,
-    },
-  },
-};
-const labels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-export default function ChartReact() {
-  const dataChart = useSelector((state) => state.dashboard);
-  const listExpense = dataChart.data.listExpense.map((item) => {
+export default function ChartReact(props) {
+  console.log(props);
+  const labels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+      },
+    },
+  };
+
+  const listExpense = props.data.listExpense.map((item) => {
     return item.total;
   });
-  const listIncome = dataChart.data.listIncome.map((item) => {
+  const listIncome = props.data.listIncome.map((item) => {
     return item.total;
   });
 

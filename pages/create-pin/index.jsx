@@ -8,35 +8,12 @@ import cookies from "next-cookies";
 import Cookies from "js-cookie";
 import Router from "next/router";
 
-export async function getServerSideProps(context) {
-  const dataCookies = cookies(context);
-  const result = await axiosServer
-    .get(`/user?page=1&limit=50&search=&sort=firstName ASC`, {
-      headers: {
-        Authorization: `Bearer ${dataCookies.token}`,
-      },
-    })
-    .then((res) => {
-      return res;
-    })
-    .catch((err) => {
-      return [];
-    });
-  console.log(result);
-  return {
-    props: {
-      data: result.data.data,
-    }, // will be passed to the page component as props
-  };
-}
-
-export default function CreatePin(props) {
+export default function CreatePin() {
   const [pin, setPin] = useState([]);
   const [fixPin, setFixPin] = useState({ pin: "" });
   const [updated, setUpdated] = useState(false);
 
   const handleChange = async (e) => {
-    console.log(e.target.name);
     const { maxLength, value, name } = e.target;
     const [fildName, fildIndex] = name.split("-");
     await setPin([...pin, value]);
@@ -54,6 +31,7 @@ export default function CreatePin(props) {
       const id = Cookies.get("id");
       console.log(id);
       const result = await axios.patch(`user/pin/${id}`, fixPin);
+      alert(result.data.msg);
       if (result.data.status == 200) {
         setUpdated(true);
       }
@@ -69,6 +47,7 @@ export default function CreatePin(props) {
       setFixPin({ pin: newPinn });
     }
   }, [pin]);
+  console.log(fixPin);
   return (
     <div style={{ display: "flex" }}>
       <div style={{ flex: 1 }}>
