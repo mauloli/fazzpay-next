@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Login.module.css";
 import Link from "next/link";
-import Banner from "../../components/banner/Banner";
+import Banner from "../../components/banner/banner";
 import {
   IoMailOutline,
   IoLockClosedOutline,

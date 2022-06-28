@@ -2,7 +2,7 @@ import axiosServer from "../../utils/axiosServer";
 import axios from "../../utils/axios";
 import React, { useEffect, useState } from "react";
 import { IoCheckmarkOutline } from "react-icons/io5";
-import Banner from "../../components/banner/Banner";
+import Banner from "../../components/banner/banner";
 import styles from "./Createpin.module.css";
 import cookies from "next-cookies";
 import Cookies from "js-cookie";

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./Reset.module.css";
-import Banner from "../../components/banner/Banner";
+import Banner from "../../components/banner/banner";
 import { useRouter } from "next/router";
 import Router from "next/router";
 import axios from "../../utils/axios";
