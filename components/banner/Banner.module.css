@@ -30,3 +30,12 @@
 .textDetails span {
   margin: 15px 0px;
 }
+
+@media (max-width: 500px) {
+  .imgLine {
+    display: none;
+  }
+  .imgBanner {
+    width: 100%;
+  }
+}

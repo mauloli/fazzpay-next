@@ -5,7 +5,9 @@ import { useRouter } from "next/router";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 export default function Navbar() {
+  const cloudinaryImage = process.env.CLOUDINARY_IMAGE;
   const user = useSelector((state) => state.userLogin);
+  console.log(user.data.image);
   console.log(user);
   const router = useRouter();
   const handleLogout = () => {
@@ -37,7 +39,15 @@ export default function Navbar() {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0"></ul>
           <form className="d-flex align-items-xl-center flex-xl-row flex-column ">
             <div className="nav-link ">
-              <img src="../../user1.png" alt="" style={{ width: "50px" }} />
+              <img
+                src={
+                  user.data.image
+                    ? `${cloudinaryImage}${user.data.image}`
+                    : "../../user1png"
+                }
+                alt=""
+                style={{ width: "50px", borderRadius: "50%" }}
+              />
             </div>
 
             <div className=" d-flex flex-column me-3 ms-3">
